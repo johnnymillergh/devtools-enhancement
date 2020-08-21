@@ -1,0 +1,35 @@
+# Travis CI Java documentation can be found in:
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs/
+language: node_js
+
+node_js:
+  - node
+
+# Skipping the Installation Phase
+# https://docs.travis-ci.com/user/job-lifecycle/#skipping-the-installation-phase
+install:
+  - npm install
+
+script:
+  - echo "Starting to build. DOCKER_HUB_USERNAME:"
+  - echo $DOCKER_HUB_USERNAME
+  - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+  - $TARGET_JOB
+
+env:
+  global:
+    # https://docs.travis-ci.com/user/encryption-keys#usage
+    # travis encrypt --pro KEY=value
+    - secure: "BPVJF9IYjkwHWaxJwTfaAwcoXvcZotk+r+KTwhTQyNhBEeheaQwULVp95VSkcGH0cYJMQkg0Na70Yi1dZG8DrCvMnWYUFZ+l9T6A0muT9cBi51nmevrWHH7Mdu1LUIBvVuPiCOhCjJGrjiexTHk0taCXsPJsjAf7dYpRCNPDKgQ1cVBsoYObKHVGoMhYU6c2qbDqqK7FJAYO2O8dxqsxFUWDt63FSYC9DdIRBiettk45k5fKgPz5CG3Hism9xnU6T/lEFWIoNp48qFsbE+sNyB70xqSpGWOG+5ltqIRkAzjDOUg/u6yA6RyYBk8lY+ISHcw/5ExYZfc56P0N+WXPobQMKEVpgpO/q9ZnK32FzvJvyikDj45ZYfFFTD9f4beAZ+aMozgycZI8qExKuKmsgJwvHKcEx6LcvjAakFKVvs9rFcyz/fA+2UKBNu4zhEuvD8HSzqWrJaY256OYvKgQGJe1z6dVSv2UZCVQHI1Syeq5Jc/0v1THzzNlqxB7dByPlTF8ZZji7/W5+nOwg9pH38cJdd+BinhfWQA0NN8RQZ0ljk1pndEd/Bl5BKGrsjzOci7UbimewCDAeoQFQGIGGLb8gDqHJmzZnCP9c3Nproa4rcJPRjnZWwE2yO24ywaafgRDFpLQzN9lFBVx8+S7GD9ms+1S00E7nyBHQhF99tk="
+    - secure: "MLLiYDkisJzIKyIp3NhG1TqSt74p0K90TpPK0jk38XQFmV39wg9aUDVArgS650mhtYOnKOP+NUlrbTxwBbKyY0vlk4Nzq8i46J1+bTOzQxYXBMAG71FPGkqIV4lBDn4mmFEzKhGYAqKJTAzp5lHelhb7+q6FdjBhkyQ4rq3C96unwi2RfEX8AOFkitPpKNusvp0C4hUJcz2UwnyWtWR1zVx9BNMro6jUPYe1R2wc05XEc9lKz8OYzpaG3v9xICOMTMO8vLt3PDegyRK6hsCoftVpxJgBDdyyBw0ipB3i531f28a0g++KdeDsM6X8NdT5aNnRzj+mynMRIsTodHt7Mu6maLpejfnOnHfNJaV3TNdfVpjPYidfakNMDJYRU+ev0zn0noxVCrn5AcWC07JaBwoUIV/mzart7ZEF+3dg25CRJRGe+tON6QofxHqb/fUfTl4OoHYpjtf2yClAy4ZcVgSJixiGqQMEEdU6Ib5cRVJvosocbH+3chbH+KhoV3dbuOHIb+u7tApnYr/BuuLFoiNQ6UYFXAXW9ss3M0NNMV/FZ+Ud4WjXlF5J2PPj6C+0q9Y5Q9ksRffmVHq9GrIX99G7JYust/ak9VqyGdziiurAXaGlGHsH/oJqNezGCmkWrFhSp2e+7FaUdxNdTTjAzdZsvvT+61snH79MHWx1rmo="
+  # Speeding up the build
+  # https://docs.travis-ci.com/user/speeding-up-the-build/
+  matrix:
+    - TARGET_JOB="npm run lint"
+    - TARGET_JOB="npm run travis:prod"
+
+# https://docs.travis-ci.com/user/notifications#default-notification-settings
+notifications:
+  email:
+    on_success: change
+    on_failure: always

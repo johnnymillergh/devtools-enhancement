@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  muscle-and-fitness-admin:
+  devtools-enhancement:
     container_name: devtools-enhancement-prod
     image: "ijohnnymiller/devtools-enhancement-prod:${TAG}"
     build:

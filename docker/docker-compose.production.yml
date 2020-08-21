@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  muscle-and-fitness-admin:
+    container_name: devtools-enhancement-prod
+    image: "ijohnnymiller/devtools-enhancement-prod:${TAG}"
+    build:
+      dockerfile: ./Dockerfile
+      context: ..
+      args:
+        ENV: production
+        ENV_ALIAS: prod
+    ports:
+      - 8080:80
+    volumes:
+      - /Users/johnny/docker-file-mapping/devtools-enhancement-prod:/var/log/nginx
+    environment:
+      TZ: Asia/Hong_Kong

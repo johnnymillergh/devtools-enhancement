@@ -1,12 +1,14 @@
 {
   "name": "devtools-enhancement",
-  "version": "0.1.0",
+  "version": "0.1.0-beta",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:prod": "vue-cli-service build && docker-compose -f docker/docker-compose.production.yml up -d && docker-compose -f docker/docker-compose.production.yml push",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "travis:prod": "npm run lint && npm run test:unit && npm run build:prod"
   },
   "dependencies": {
     "core-js": "^3.6.5",

@@ -1,6 +1,6 @@
 {
   "name": "devtools-enhancement",
-  "version": "0.1.0-beta",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
